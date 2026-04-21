@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Summarizer with ROUGE</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 AI Text Summarizer</h1>
+        <p class="subtitle">Generate smart summaries instantly and evaluate them with ROUGE</p>
+
+        <form method="post">
+            <label for="text">Input Text</label>
+            <textarea id="text" name="text" placeholder="Paste your text here...">{{ input_text }}</textarea>
+
+            <label for="reference_summary">Reference Summary (Optional for ROUGE)</label>
+            <textarea
+                id="reference_summary"
+                name="reference_summary"
+                placeholder="Paste the human-written reference summary here..."
+            >{{ reference_summary }}</textarea>
+
+            <button type="submit">Summarize</button>
+        </form>
+
+        {% if error %}
+        <div class="error-box">
+            <h2>Error</h2>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        {% if summary %}
+        <div class="result">
+            <h2>Generated Summary</h2>
+            <p>{{ summary }}</p>
+        </div>
+        {% endif %}
+
+        {% if rouge_scores %}
+        <div class="result">
+            <h2>ROUGE Scores</h2>
+            <div class="score-grid">
+                <div class="score-card">
+                    <span class="score-label">ROUGE-1</span>
+                    <span class="score-value">{{ rouge_scores.rouge1 }}</span>
+                </div>
+                <div class="score-card">
+                    <span class="score-label">ROUGE-2</span>
+                    <span class="score-value">{{ rouge_scores.rouge2 }}</span>
+                </div>
+                <div class="score-card">
+                    <span class="score-label">ROUGE-L</span>
+                    <span class="score-value">{{ rouge_scores.rougeL }}</span>
+                </div>
+                <div class="score-card">
+                    <span class="score-label">ROUGE-Lsum</span>
+                    <span class="score-value">{{ rouge_scores.rougeLsum }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
